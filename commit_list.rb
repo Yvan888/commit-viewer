@@ -1,26 +1,6 @@
 require 'date'
 require 'csv'
 
-def file_exists(file_name)
-  ## This method fetch the commit list from a csv.
-
-  fetched = []
-
-  CSV.foreach(file_name) do |row|
-    fetched << {
-      SHA: row[0],
-      message: row[1],
-      date: row[2],
-      author: row[3]
-    }
-  end
-
-  # Deletes column names of the csv file
-  fetched.delete_at(0)
-
-  puts fetched
-end
-
 def get_commits(url)
   ## This method gets a commit list from a repository.
 
@@ -68,15 +48,4 @@ def data_persistence(docs, url)
       csv << n.values
     end
   end
-end
-
-def file_does_not_exists(url)
-  ## This method is applied when this is the first time
-  ## getting a repository.
-
-  commits = get_commits(url)
-
-  docs = parsing(commits)
-
-  data_persistence(docs, url)
 end
